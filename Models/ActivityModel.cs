@@ -24,6 +24,7 @@ namespace EventApp.Models
         public string Duration {get; set;}
         public string DurationFormat {get; set;}
         public String AMPM {get;set;}
+        public string Address {get;set;}
         public int UserId {get; set;}
         public User Creator {get; set;}
         public List<Join> Joins {get; set;}
