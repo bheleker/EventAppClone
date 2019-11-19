@@ -1,0 +1,55 @@
+@model EventApp.Models.ActivityModel
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-4">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h1>Dojo Activity Center</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav flex-grow-1 justify-right flex-row-reverse">
+                    <li class="nav-item mr-2 ml-5">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut"><u class="text-primary">Logout</u></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Dashboard"><u class="text-primary">Home</u></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="text-left">
+    <h2 class="mb-5">Create an Activity</h2>
+    <form asp-action="CreateActivity" method="post">
+    <div class="ml-5 align-top">
+        <div style="width:49.5%" class="d-inline-block">
+            <span class="d-block" asp-validation-for="Title"></span>
+            <h3 class="d-inline-block mb-4 w-25">Title:</h3><input class="d-inline-block ml-3" style="width:60%;" asp-for="Title">
+        </div>
+        <div style="width:49.5%" class="d-inline-block">
+            <span class="d-block" asp-validation-for="Time"></span>
+            <h3 class="d-inline-block mb-4 w-25">Time:</h3><input class="d-inline-block ml-3" style="width:35%;" asp-for="Time"><select asp-for="AMPM" style="width:25%;" class="ml-1"><option>am</option><option>pm</option></select>
+        </div>
+        <div style="width:49.5%" class="d-inline-block">
+            <span class="d-block" asp-validation-for="Date"></span>
+            <h3 class="d-inline-block mb-4 w-25">Date:</h3><input class="d-inline-block ml-3" style="width:60%;" asp-for="Date" type="date">
+        </div>
+        <div style="width:49.5%" class="d-inline-block">
+            <span class="d-block" asp-validation-for="Duration"></span>
+            <h3 class="d-inline-block mb-4 w-25">Duration:</h3><input class="d-inline-block ml-3" style="width:35%;" asp-for="Duration">
+                <select style="width:25%;"asp-for="DurationFormat">
+                    <option value="Hours">Hours</option>
+                    <option value="Minutes">Minutes</option>
+                    <option value="Days">Days</option>
+                </select>
+        </div>
+    </div>
+    <div class="ml-5 align-top mt-4">
+        <span class="d-block font-italic" asp-validation-for="Description"></span>
+        <h3 class="d-inline-block align-top mr-2">Description:</h3><textarea asp-for="Description" class="w-75" style="height:200px;"></textarea>
+        <button type="submit" class="btn btn-primary float-right mr-5 mt-4">Create Activity</button>
+    </div>
+    </form>
+</div>

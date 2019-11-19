@@ -1,0 +1,59 @@
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h1>Dojo Activity Center</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav flex-grow-1 justify-right flex-row-reverse">
+                    <li class="nav-item mr-2 ml-5">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut"><u class="text-primary">Logout</u></a>
+                    </li>
+                    <li class="nav-item">
+                        <p class="nav-link text-dark">Welcome, @ViewBag.Name</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div>
+    <table class="table border border-dark">
+    <thead class="thead-light" style="font-size:18px">
+    <tr class="border-right border-dark">
+        <th class="border-top border-right border-dark">Activity</th>
+        <th class="border-top border-right border-dark">Date and Time</th>
+        <th class="border-top border-right border-dark">Duration</th>
+        <th class="border-top border-right border-dark">Event Coordinator</th>
+        <th class="border-top border-right border-dark">No. of Participants</th>
+        <th class="border-top border-right border-dark">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+            @foreach(ActivityModel w in Model)
+            {
+            <tr>
+                <td class="border-right border-dark"><a href="/Activity/@w.ActivityId">@w.Title</a></td>
+                <td class="border-right border-dark">@w.Date.ToString("MM/dd") at @w.Time @w.AMPM</td>
+                <td class="border-right border-dark">@w.Duration @w.DurationFormat</td>
+                <td class="border-right border-dark">@w.Creator.Name</td>
+                <td class="border-right border-dark">@w.Joins.Count</td>
+                 @if(ViewBag.CurrentUser == @w.UserId)
+                 {
+                     <td class="border-right border-dark"><a href="/ActivityDelete/@w.ActivityId">Delete</a></td>
+                 }
+                else if(w.Joins.All(j => j.UserId != ViewBag.CurrentUser) == true){
+                     <td class="border-right border-dark"><a href="/Join/@w.ActivityId">Join</a></td>
+                }
+                else{
+                    <td class="border-right border-dark"><a href="/Leave/@w.ActivityId">Leave</a></td>
+                    }
+                </tr>
+            }
+    </tbody>
+</table>
+<div class="text-right"><a class="btn btn-primary w-25" asp-action="NewActivity" style="box-shadow:2px 2px 2px 2px black;">New Activity</a></div>
+
+</div>

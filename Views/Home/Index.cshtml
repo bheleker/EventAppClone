@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model EventApp.Models.LogUser
+
+<h1 class="text-left">Welcome to the Dojo Activity Center</h1>
+<div style="width:45%" class="text-left d-inline-block align-top mt-5 border border-dark">
+<div style="margin-top:-10px;">
+    <h3 style="margin-top:-20px; background-color:white;" class="ml-2 d-inline-block">Register</h3>
+</div>
+<form asp-action="Register" type="Post" class="ml-4">
+    <div>
+        <span class="font-italic font-light d-inline-block" asp-validation-for="Users.Name"></span>
+        <h3 class="d-inline-block mb-5 mt-4 w-50">Name: </h3> <input class="d-inline-block" asp-for="Users.Name">
+    </div>
+    <div>
+        <span class="font-italic font-light d-inline-block" asp-validation-for="Users.Email"></span>
+        <h3 class="d-inline-block mb-5 w-50">Email: </h3> <input class="d-inline-block" asp-for="Users.Email">
+    </div>
+    <div>
+        <span class="font-italic font-light d-inline-block" asp-validation-for="Users.Password"></span>
+        <h3 class="d-inline-block mb-5 w-50">Password: </h3> <input class="d-inline-block" asp-for="Users.Password">
+    </div>
+    <div>
+        <span class="font-italic font-light d-inline-block" asp-validation-for="Users.Password"></span>
+        <h3 class="d-inline-block mb-5 w-50">Password: </h3> <input class="d-inline-block" asp-for="Users.MatchPassword">
+    </div>
+    <button class="btn btn-primary w-25 mr-4 mb-4 float-right"  style="box-shadow: 2px 2px 2px 2px black;"  type="submit">Register</button>
+</form>
+</div>
+<div style="width:45%; padding-top:-10px;" class="ml-4 text-left d-inline-block align-top mt-5 border border-dark">
+<div style="margin-top:-10px;">
+<h3 style="margin-top:-20px; background-color:white;" class="d-inline-block ml-2">Login</h3>
+</div>    
+    <form class="ml-4" asp-action="LogIn" type="post">
+            <span class="font-italic font-light d-inline-block" class="font-weight-light font-italic" asp-validation-for="Logs.Email"></span>
+        <div>
+            <h3 class="d-inline-block mb-5 w-50 mt-4">Email: </h3> <input class="d-inline-block" asp-for="Logs.Email">
+        </div>
+        <div>
+            <h3 class="d-inline-block mb-5 w-50">Password: </h3> <input class="d-inline-block" type="password" asp-for="Logs.Password">
+        </div>
+        <button class="btn btn-primary w-25 mr-4 mb-4 float-right" style="box-shadow: 2px 2px 2px 2px black;" type="submit">Log In</button>
+    </form>
+</div>
+
+</div>
