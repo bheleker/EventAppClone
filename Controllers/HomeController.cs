@@ -181,6 +181,21 @@ namespace EventApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Places()
+        {
+            return View();
+        }
+        public IActionResult PlacesSearch()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult PlacesQuery(string query)
+        {
+            return RedirectToAction("Places");
+        }
+
         public IActionResult Privacy()
         {
             return View();
