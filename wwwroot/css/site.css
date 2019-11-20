@@ -60,18 +60,19 @@ body {
 }
 #mapDisplay{
   height: 400px;
-  width: 500px;
+  width: 100%;
   display: inline-block;
 }
 
 #activityChat{
   vertical-align: top;
-  display: inline-block;
+  display: flex;
+  flex-flow: column;
   border: 2px solid black;
   border-radius: 8px;
   padding: 10px 7px;
   height: 400px;
-  width: 400px;
+  width: 100%;
 }
 
 .rightSide{
@@ -87,7 +88,9 @@ body {
   margin: 3px 0px 3px;
   display: block;
 }
-
+.messageFlex{
+  flex: 1 1 auto;
+}
 #description {
   font-family: Roboto;
   font-size: 15px;
@@ -164,3 +167,4 @@ body {
 .messageForm{
   vertical-align: bottom;
 }
+

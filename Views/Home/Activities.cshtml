@@ -112,10 +112,12 @@
 <div class="col-md-4 col-sm-12 rightSide">
     <h4>Group Chat:</h4>
     <div id="activityChat">
+        <div class="messageFlex">
         @foreach (Message m in @Model.viewMessageList)
         {
             <span class="chatMessage">@m.MessageBody ---- @m.Creator.Name at @m.CreatedAt</span>
         }
+        </div>
         <div class="messageForm">
             <form asp-action="PostMessage" asp-route-id="@Model.viewActivityModel.ActivityId" method="Post">
                 <input asp-for="viewMessage.MessageBody">
