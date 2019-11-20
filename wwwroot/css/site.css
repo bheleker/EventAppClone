@@ -58,6 +58,9 @@ body {
 #map {
   height: 400px;
 }
+#mapDisplay{
+  height: 400px;
+}
 
 
 #description {

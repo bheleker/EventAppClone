@@ -163,6 +163,8 @@ namespace EventApp.Controllers
             if(HttpContext.Session.GetInt32("UserId") != null){
             IEnumerable<ActivityModel> ThisActivity = dbContext.Activities.Where(a => a.ActivityId == id)
             .Include(a => a.Joins).ThenInclude(j => j.User);
+            ActivityModel retActivity = dbContext.Activities.FirstOrDefault(a => a.ActivityId == id);
+            ViewBag.Address = retActivity.Address;
             ViewBag.User = HttpContext.Session.GetInt32("UserId");
             foreach(ActivityModel a in ThisActivity){
 

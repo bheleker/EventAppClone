@@ -13,7 +13,7 @@
       infowindow = new google.maps.InfoWindow();
 
       map = new google.maps.Map(
-          document.getElementById('map'), {center: sydney, zoom: 15});
+          document.getElementById('mapDisplay'), {center: sydney, zoom: 15});
 
       var request = {
         query: 'Subway',
@@ -46,5 +46,5 @@
     }
   </script>
 
-<div id="map"></div>
+<div id="mapDisplay"></div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEQidesVmbzzyHL2723Cb7tKKVhRha8cY&libraries=places&callback=initMap" async defer></script>
