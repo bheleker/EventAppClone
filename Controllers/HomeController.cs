@@ -40,8 +40,6 @@ namespace EventApp.Controllers
                     ModelState.AddModelError("Email", "Email's already in use.");
                     return View("Index");
                 }
-                PasswordHasher<User> PassHash = new PasswordHasher<User>();
-                NewUser.Users.Password = PassHash.HashPassword(NewUser.Users, NewUser.Users.Password);
                 User UserSave = NewUser.Users;
                 dbContext.Add(UserSave);
                 dbContext.SaveChanges();
