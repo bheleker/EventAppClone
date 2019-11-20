@@ -24,16 +24,16 @@
     </nav>
 </header>
 <div class="ml-5">
-    @foreach(ActivityModel act in Model)
+    @foreach(ActivityModel act in Model.viewActivityList)
     {
     <h1 class="d-inline-block">@act.Title</h1>
-    @if(ViewBag.User == act.UserId)
+    @if(Model.viewSessionId == act.UserId)
     {
     <a style="width:20%;box-shadow:2px 2px 2px 2px black;" class="float-right btn btn-primary"
         href="/ActivityDelete/@act.ActivityId">Delete</a>
     }
 
-    else if(act.Joins.All(j => j.UserId != ViewBag.User) == true){
+    else if(act.Joins.All(j => j.UserId != Model.viewSessionId) == true){
     <a style="width:20%;box-shadow:2px 2px 2px 2px black;" class="float-right btn btn-primary"
         href="/Join/@act.ActivityId">Join</a>
     }
@@ -56,28 +56,25 @@
         </ul>
     </div>
     }
-    <h1>@ViewBag.Address</h1>
+
+
 </div>
 
 <script>
-    // This example requires the Places library. Include the libraries=places
-    // parameter when you first load the API. For example:
-    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
     var map;
     var service;
     var infowindow;
 
     function initMap() {
-      var sydney = new google.maps.LatLng(-33.867, 151.195);
+      var sydney = new google.maps.LatLng(40, -95.7);
 
       infowindow = new google.maps.InfoWindow();
 
       map = new google.maps.Map(
-          document.getElementById('mapDisplay'), {center: sydney, zoom: 15});
+          document.getElementById('mapDisplay'), {center: sydney, zoom: 17});
 
       var request = {
-        query: '@ViewBag.Address',
+        query: '@Model.viewActivityModel.Address',
         fields: ['name', 'geometry'],
       };
 
@@ -107,5 +104,20 @@
     }
   </script>
 
-<div id="mapDisplay"></div>
+<div class="col-md-7 col-sm-12 nonBlock">
+    <h4>Join us at: @Model.viewActivityModel.Address</h4>
+    <div id="mapDisplay"></div>
+</div>
+<div class="col-md-4 col-sm-12 rightSide">
+    <h4>Group Chat:</h4>
+    <div id="activityChat">
+        <span class="chatMessage">Chat Log with time</span>
+        <span class="chatMessage">Chat Log with time</span>
+        <span class="chatMessage">Chat Log with time</span>
+        <span class="chatMessage">Chat Log with time</span>
+        <span class="chatMessage">Chat Log with time</span>
+        <span class="chatMessage">Chat Log with time</span>
+        <span class="chatMessage">Chat Log with time</span>
+    </div>
+</div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEQidesVmbzzyHL2723Cb7tKKVhRha8cY&libraries=places&callback=initMap" async defer></script>

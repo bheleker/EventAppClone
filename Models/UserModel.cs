@@ -16,5 +16,6 @@ namespace EventApp.Models{
 
         public string IDToken {get; set;}
     
+        public List<Message> CreatedMessages {get;set;}
     }
 }
