@@ -28,5 +28,7 @@ namespace EventApp.Models
         public int UserId {get; set;}
         public User Creator {get; set;}
         public List<Join> Joins {get; set;}
+        public List<Message> AttachedMessages {get;set;}
+
     }
 }

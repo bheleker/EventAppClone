@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventApp.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20191119174838_FirstMigration")]
+    [Migration("20191120184055_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,8 @@ namespace EventApp.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AMPM");
+
+                    b.Property<string>("Address");
 
                     b.Property<DateTime>("Date");
 
@@ -70,6 +72,33 @@ namespace EventApp.Migrations
                     b.ToTable("Joins");
                 });
 
+            modelBuilder.Entity("EventApp.Models.Message", b =>
+                {
+                    b.Property<int>("MessageId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("CreatorUserId");
+
+                    b.Property<string>("MessageBody")
+                        .IsRequired();
+
+                    b.Property<int?>("MessageId1");
+
+                    b.Property<int?>("SpecificActivityActivityId");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("CreatorUserId");
+
+                    b.HasIndex("MessageId1");
+
+                    b.HasIndex("SpecificActivityActivityId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("EventApp.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -109,6 +138,21 @@ namespace EventApp.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EventApp.Models.Message", b =>
+                {
+                    b.HasOne("EventApp.Models.User", "Creator")
+                        .WithMany("CreatedMessages")
+                        .HasForeignKey("CreatorUserId");
+
+                    b.HasOne("EventApp.Models.Message")
+                        .WithMany("AttachedMessages")
+                        .HasForeignKey("MessageId1");
+
+                    b.HasOne("EventApp.Models.ActivityModel", "SpecificActivity")
+                        .WithMany()
+                        .HasForeignKey("SpecificActivityActivityId");
                 });
 #pragma warning restore 612, 618
         }

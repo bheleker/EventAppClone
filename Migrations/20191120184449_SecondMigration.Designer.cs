@@ -3,14 +3,16 @@ using System;
 using EventApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EventApp.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20191120184449_SecondMigration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,20 +77,20 @@ namespace EventApp.Migrations
                     b.Property<int>("MessageId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ActivityId");
-
                     b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("CreatorUserId");
 
                     b.Property<string>("MessageBody")
                         .IsRequired();
 
-                    b.Property<int>("UserId");
+                    b.Property<int?>("SpecificActivityActivityId");
 
                     b.HasKey("MessageId");
 
-                    b.HasIndex("ActivityId");
+                    b.HasIndex("CreatorUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SpecificActivityActivityId");
 
                     b.ToTable("Messages");
                 });
@@ -136,15 +138,13 @@ namespace EventApp.Migrations
 
             modelBuilder.Entity("EventApp.Models.Message", b =>
                 {
-                    b.HasOne("EventApp.Models.ActivityModel", "SpecificActivity")
-                        .WithMany("AttachedMessages")
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("EventApp.Models.User", "Creator")
                         .WithMany("CreatedMessages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CreatorUserId");
+
+                    b.HasOne("EventApp.Models.ActivityModel", "SpecificActivity")
+                        .WithMany("AttachedMessages")
+                        .HasForeignKey("SpecificActivityActivityId");
                 });
 #pragma warning restore 612, 618
         }

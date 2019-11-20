@@ -8,5 +8,6 @@ namespace EventApp.Models
         public DbSet<User> Users {get; set;}
         public DbSet<ActivityModel> Activities {get; set;}
         public DbSet<Join> Joins {get; set;}
+        public DbSet<Message> Messages {get;set;}
     }
 }

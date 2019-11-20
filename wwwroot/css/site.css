@@ -60,8 +60,33 @@ body {
 }
 #mapDisplay{
   height: 400px;
+  width: 500px;
+  display: inline-block;
 }
 
+#activityChat{
+  vertical-align: top;
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 10px 7px;
+  height: 400px;
+  width: 400px;
+}
+
+.rightSide{
+  display: inline-block;
+  vertical-align: top;
+  margin: 5px 5px 5px 5px;
+}
+.nonBlock{
+  display: inline-block;
+  vertical-align: top;
+}
+.chatMessage{
+  margin: 3px 0px 3px;
+  display: block;
+}
 
 #description {
   font-family: Roboto;

@@ -164,16 +164,22 @@ namespace EventApp.Controllers
             IEnumerable<ActivityModel> ThisActivity = dbContext.Activities.Where(a => a.ActivityId == id)
             .Include(a => a.Joins).ThenInclude(j => j.User);
             ActivityModel retActivity = dbContext.Activities.FirstOrDefault(a => a.ActivityId == id);
-            ViewBag.Address = retActivity.Address;
-            ViewBag.User = HttpContext.Session.GetInt32("UserId");
-            foreach(ActivityModel a in ThisActivity){
+            ActivityViewModel viewModel = new ActivityViewModel()
+            {
+                viewActivityList = ThisActivity,
+                viewActivityModel = retActivity,
+                viewSessionId = (int)HttpContext.Session.GetInt32("UserId"),
+                // viewMessageList = 
 
+            };
+            foreach(ActivityModel a in ThisActivity){
+            
             a.Creator = dbContext.Users.Where(u => u.UserId == a.UserId).First();
             }
             if(ThisActivity == null){
                 return RedirectToAction("Dashboard");
             }
-            return View(ThisActivity);
+            return View(viewModel);
             }
             return RedirectToAction("Index");
         }

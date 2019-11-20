@@ -26,5 +26,6 @@ namespace EventApp.Models{
         [DataType(DataType.Password)]
         public string MatchPassword {get;set;}
     
+        public List<Message> CreatedMessages {get;set;}
     }
 }
