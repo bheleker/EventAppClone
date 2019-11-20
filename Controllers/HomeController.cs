@@ -162,12 +162,18 @@ namespace EventApp.Controllers
             IEnumerable<ActivityModel> ThisActivity = dbContext.Activities.Where(a => a.ActivityId == id)
             .Include(a => a.Joins).ThenInclude(j => j.User);
             ActivityModel retActivity = dbContext.Activities.FirstOrDefault(a => a.ActivityId == id);
+            IEnumerable<Message> retActivityList = dbContext.Messages
+            .Include(m => m.SpecificActivity)
+            .Include(m => m.Creator)
+            .Where(m => m.ActivityId == id)
+            .ToList();
+            
             ActivityViewModel viewModel = new ActivityViewModel()
             {
                 viewActivityList = ThisActivity,
                 viewActivityModel = retActivity,
                 viewSessionId = (int)HttpContext.Session.GetInt32("UserId"),
-                // viewMessageList = 
+                viewMessageList = retActivityList,
 
             };
             foreach(ActivityModel a in ThisActivity){
@@ -181,27 +187,21 @@ namespace EventApp.Controllers
             }
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public IActionResult PostMessage(ActivityViewModel viewModel, int id)
+        {
+            System.Console.WriteLine("########################################################");
+            viewModel.viewMessage.UserId = (int)HttpContext.Session.GetInt32("UserId");
+            viewModel.viewMessage.ActivityId = id;
+            dbContext.Messages.Add(viewModel.viewMessage);
+            dbContext.SaveChanges();
+            return Redirect($"/Activity/{id}");
+        }
         public IActionResult LogOut()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index");
         }
-
-        public IActionResult Places()
-        {
-            return View();
-        }
-        public IActionResult PlacesSearch()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult PlacesQuery(string query)
-        {
-            return RedirectToAction("Places");
-        }
-
         public IActionResult Privacy()
         {
             return View();
