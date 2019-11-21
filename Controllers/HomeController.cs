@@ -220,7 +220,21 @@ namespace EventApp.Controllers
             if(HttpContext.Session.GetInt32("UserId") != null){
             IEnumerable<ActivityModel> ThisActivity = dbContext.Activities.Where(a => a.ActivityId == id)
             .Include(a => a.Joins).ThenInclude(j => j.User);
-            ViewBag.User = HttpContext.Session.GetInt32("UserId");
+            ActivityModel retActivity = dbContext.Activities.FirstOrDefault(a => a.ActivityId == id);
+            IEnumerable<Message> retActivityList = dbContext.Messages
+            .Include(m => m.SpecificActivity)
+            .Include(m => m.Creator)
+            .Where(m => m.ActivityId == id)
+            .ToList();
+            
+            ActivityViewModel viewModel = new ActivityViewModel()
+            {
+                viewActivityList = ThisActivity,
+                viewActivityModel = retActivity,
+                viewSessionId = (int)HttpContext.Session.GetInt32("UserId"),
+                viewMessageList = retActivityList,
+
+            };
             foreach(ActivityModel a in ThisActivity){
 
             a.Creator = dbContext.Users.Where(u => u.UserId == a.UserId).First();
@@ -231,6 +245,16 @@ namespace EventApp.Controllers
             return View(ThisActivity);
             }
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult PostMessage(ActivityViewModel viewModel, int id)
+        {
+            System.Console.WriteLine("########################################################");
+            viewModel.viewMessage.UserId = (int)HttpContext.Session.GetInt32("UserId");
+            viewModel.viewMessage.ActivityId = id;
+            dbContext.Messages.Add(viewModel.viewMessage);
+            dbContext.SaveChanges();
+            return Redirect($"/Activity/{id}");
         }
         public IActionResult LogOut()
         {

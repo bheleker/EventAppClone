@@ -1,3 +1,4 @@
+@model ActivityViewModel
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-4">
         <div class="container">
@@ -111,13 +112,18 @@
 <div class="col-md-4 col-sm-12 rightSide">
     <h4>Group Chat:</h4>
     <div id="activityChat">
-        <span class="chatMessage">Chat Log with time</span>
-        <span class="chatMessage">Chat Log with time</span>
-        <span class="chatMessage">Chat Log with time</span>
-        <span class="chatMessage">Chat Log with time</span>
-        <span class="chatMessage">Chat Log with time</span>
-        <span class="chatMessage">Chat Log with time</span>
-        <span class="chatMessage">Chat Log with time</span>
+        <div class="messageFlex">
+        @foreach (Message m in @Model.viewMessageList)
+        {
+            <span class="chatMessage">@m.MessageBody ---- @m.Creator.Name at @m.CreatedAt</span>
+        }
+        </div>
+        <div class="messageForm">
+            <form asp-action="PostMessage" asp-route-id="@Model.viewActivityModel.ActivityId" method="Post">
+                <input asp-for="viewMessage.MessageBody">
+                <button>Send</button>
+            </form>
+        </div>
     </div>
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEQidesVmbzzyHL2723Cb7tKKVhRha8cY&libraries=places&callback=initMap" async defer></script>
