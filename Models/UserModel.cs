@@ -9,12 +9,20 @@ namespace EventApp.Models{
         [Key]
         public int UserId {get; set;}
         [Required]
-        public string FirstName {get;set;}
-        public string LastName {get;set;}
+        [MinLength(2, ErrorMessage="Name must be between 2 and 15 characters.")]
+        [MaxLength(15, ErrorMessage="Name must be between 2 and 15 characters.")]
+        public string Name {get;set;}
 
+        [Required]
+        [EmailAddress]
         public string Email {get;set;}
-
-        public string IDToken {get; set;}
+        [DataType(DataType.Password)]
+        [RegularExpression(@"(?=^.{8,50}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$", ErrorMessage="Password must be 8 characters or longer and contain one uppercase and one lowercase letter, one number and one special character.")]
+        public string Password {get;set;}
+        [NotMapped]
+        [Compare("Password", ErrorMessage="Passwords do not match")]
+        [DataType(DataType.Password)]
+        public string MatchPassword {get;set;}
     
         public List<Message> CreatedMessages {get;set;}
     }

@@ -8,6 +8,10 @@ using EventApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
+using System.Net.Http; 
+
+
 
 namespace EventApp.Controllers
 {
@@ -37,9 +41,21 @@ namespace EventApp.Controllers
             {
                 if(dbContext.Users.Any(u => u.Email == NewUser.Users.Email))
                 {
-                    ModelState.AddModelError("Email", "Email's already in use.");
+                if(dbContext.Users.Where(u => u.Email == NewUser.Users.Email).First().Password == null)
+                {
+                    ModelState.AddModelError("Users.Email", "Account already exists. Please sign in on Google.");
+                }
+                else{
+                    ModelState.AddModelError("Users.Email", "Email is already in use.");
+                }
                     return View("Index");
                 }
+                if(NewUser.Users.Password == null){
+                    ModelState.AddModelError("Users.Password", "Password must not be empty.");
+                    return View("Index");
+                }
+                PasswordHasher<User> PassHash = new PasswordHasher<User>();
+                NewUser.Users.Password = PassHash.HashPassword(NewUser.Users, NewUser.Users.Password);
                 User UserSave = NewUser.Users;
                 dbContext.Add(UserSave);
                 dbContext.SaveChanges();
@@ -50,7 +66,50 @@ namespace EventApp.Controllers
                 return View("Index");
             }
         }
-                [HttpPost]
+        [HttpGet("google/verify")]
+        public void GoogleVerify()
+        {
+            Response.Redirect("https://accounts.google.com/o/oauth2/v2/auth?client_id=868360967766-16m02f3h7j62d42jhbl3pkpmia124740.apps.googleusercontent.com&response_type=code&scope=openid%20email%20profile&redirect_uri=http://localhost:5000/GoogleSignIn&state=abcdef");
+        }
+        [HttpGet("GoogleSignIn")]
+        public async Task<ActionResult> GoogleSignIn(string code, string state, string session_state)
+        {
+                var httpClient = new HttpClient  
+            {  
+                BaseAddress = new Uri("https://www.googleapis.com")  
+            };  
+            var requestUrl = $"oauth2/v4/token?code={code}&client_id=868360967766-16m02f3h7j62d42jhbl3pkpmia124740.apps.googleusercontent.com&client_secret=FHMvE9-Hc6ZOh9H0Af3oCiLQ&redirect_uri=http://localhost:5000/GoogleSignIn&grant_type=authorization_code";  
+
+            var dict = new Dictionary<string, string>  
+            {  
+                { "Content-Type", "application/x-www-form-urlencoded" }  
+            };  
+            var req = new HttpRequestMessage(HttpMethod.Post, requestUrl) { Content = new FormUrlEncodedContent(dict) };  
+            var response = await httpClient.SendAsync(req);  
+            GmailToken token = JsonConvert.DeserializeObject<GmailToken>(await response.Content.ReadAsStringAsync());
+                var httpClientTwo = new HttpClient  
+            {  
+                BaseAddress = new Uri("https://www.googleapis.com")  
+            };  
+            string url = $"https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token={token.AccessToken}";  
+            var responseTwo = await httpClient.GetAsync(url);  
+            UserProfile GoogleUserInfo = JsonConvert.DeserializeObject<UserProfile>(await responseTwo.Content.ReadAsStringAsync()); 
+            if(dbContext.Users.Any(u => u.Email == GoogleUserInfo.Email))
+                {
+                    User GoogleUser = dbContext.Users.Where(u => u.Email == GoogleUserInfo.Email).First();
+                    HttpContext.Session.SetInt32("UserId", GoogleUser.UserId);
+                    return RedirectToAction("Dashboard");
+                }
+                else{
+                    User user = new User{Name=GoogleUserInfo.Name, Email = GoogleUserInfo.Email};
+                    dbContext.Add(user);
+                    dbContext.SaveChanges();
+                    HttpContext.Session.SetInt32("UserId", user.UserId);
+                    return RedirectToAction("Dashboard");
+                }
+            
+        }
+        [HttpPost]
         public IActionResult LogIn(LogUser LogUser)
         {
             var PassHash = new PasswordHasher<LogInUser>();
@@ -161,23 +220,15 @@ namespace EventApp.Controllers
             if(HttpContext.Session.GetInt32("UserId") != null){
             IEnumerable<ActivityModel> ThisActivity = dbContext.Activities.Where(a => a.ActivityId == id)
             .Include(a => a.Joins).ThenInclude(j => j.User);
-            ActivityModel retActivity = dbContext.Activities.FirstOrDefault(a => a.ActivityId == id);
-            ActivityViewModel viewModel = new ActivityViewModel()
-            {
-                viewActivityList = ThisActivity,
-                viewActivityModel = retActivity,
-                viewSessionId = (int)HttpContext.Session.GetInt32("UserId"),
-                // viewMessageList = 
-
-            };
+            ViewBag.User = HttpContext.Session.GetInt32("UserId");
             foreach(ActivityModel a in ThisActivity){
-            
+
             a.Creator = dbContext.Users.Where(u => u.UserId == a.UserId).First();
             }
             if(ThisActivity == null){
                 return RedirectToAction("Dashboard");
             }
-            return View(viewModel);
+            return View(ThisActivity);
             }
             return RedirectToAction("Index");
         }
@@ -185,21 +236,6 @@ namespace EventApp.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index");
-        }
-
-        public IActionResult Places()
-        {
-            return View();
-        }
-        public IActionResult PlacesSearch()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult PlacesQuery(string query)
-        {
-            return RedirectToAction("Places");
         }
 
         public IActionResult Privacy()
