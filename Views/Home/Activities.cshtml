@@ -117,13 +117,21 @@
         {
             <span class="chatMessage">@m.MessageBody ---- @m.Creator.Name at @m.CreatedAt</span>
         }
+        <div class="row">
+                <div class="col-6">&nbsp;</div>
+                <div class="col-6">
+                    <ul id="messagesList"></ul>
+                </div>
         </div>
-        <div class="messageForm">
+        </div>
+        <div class="messageForm overflow-auto">
             <form asp-action="PostMessage" asp-route-id="@Model.viewActivityModel.ActivityId" method="Post">
-                <input asp-for="viewMessage.MessageBody">
-                <button>Send</button>
+                <input id="messageInput" asp-for="viewMessage.MessageBody">
+                <button id="sendButton">Send</button>
             </form>
         </div>
     </div>
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEQidesVmbzzyHL2723Cb7tKKVhRha8cY&libraries=places&callback=initMap" async defer></script>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
