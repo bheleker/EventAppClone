@@ -12,5 +12,6 @@ namespace EventApp.Models
         public int viewSessionId {get;set;}
         public IEnumerable<Message> viewMessageList {get;set;}
         public Message viewMessage {get;set;}
+        public string viewSessionUserName {get;set;}
     }
 }

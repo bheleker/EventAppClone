@@ -18,7 +18,5 @@ namespace EventApp.Models
         public User Creator {get;set;} //navigator
         public int ActivityId {get;set;}
         public ActivityModel SpecificActivity {get;set;} //navigator
-
-
     }
 }
