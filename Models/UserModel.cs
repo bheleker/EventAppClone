@@ -16,13 +16,11 @@ namespace EventApp.Models{
         [Required]
         [EmailAddress]
         public string Email {get;set;}
-        [Required]
         [DataType(DataType.Password)]
         [RegularExpression(@"(?=^.{8,50}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$", ErrorMessage="Password must be 8 characters or longer and contain one uppercase and one lowercase letter, one number and one special character.")]
-
         public string Password {get;set;}
         [NotMapped]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage="Passwords do not match")]
         [DataType(DataType.Password)]
         public string MatchPassword {get;set;}
     
