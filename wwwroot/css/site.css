@@ -85,11 +85,26 @@ body {
   vertical-align: top;
 }
 .chatMessage{
-  margin: 3px 0px 3px;
+  /* margin: 3px 0px 3px; */
   display: block;
+}
+.messageDetail{
+  justify-content: right;
+  text-align: right;
+  font-size: x-small;
+  color: gray;
+}
+.messageInput{
+  width: 85%;
+  margin: 0px -3px;
+}
+.flexContainer{
+  display: flex;
+  flex-flow: column;
 }
 .messageFlex{
   flex: 1 1 auto;
+  /* overflow-y: auto; */
 }
 #description {
   font-family: Roboto;

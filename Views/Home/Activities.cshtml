@@ -105,30 +105,32 @@
     }
   </script>
 
-<div class="col-md-7 col-sm-12 nonBlock">
+<div class="col-md-5 col-sm-12 nonBlock">
     <h4>Join us at: @Model.viewActivityModel.Address</h4>
     <div id="mapDisplay"></div>
 </div>
-<div class="col-md-4 col-sm-12 rightSide">
+<div class="col-md-6 col-sm-12 rightSide">
     <h4>Group Chat:</h4>
     <div id="activityChat">
-        <div class="messageFlex">
-        @foreach (Message m in @Model.viewMessageList)
-        {
-            <span class="chatMessage">@m.MessageBody ---- @m.Creator.Name at @m.CreatedAt</span>
-        }
-        <div class="row">
-                <div class="col-6">&nbsp;</div>
-                <div class="col-6">
-                    <ul id="messagesList"></ul>
+        <div class="overflow-auto messageFlex">
+            @foreach (Message m in @Model.viewMessageList)
+            {
+                <div class="flexContainer">
+                    
+                    <span class="chatMessage"><span style="font-weight: bold; font-style: oblique; ">@m.Creator.Name:</span> @m.MessageBody</span>
+                    <span class="messageDetail">- @m.CreatedAt</span>
                 </div>
+            }
+            <div class="flexContainer">
+                <span id="messagesList" class="chatMessage"><span id="usersList" style="font-weight: bold; font-style: oblique; "></span></span>
+            </div>
         </div>
-        </div>
-        <div class="messageForm overflow-auto">
-            <form asp-action="PostMessage" asp-route-id="@Model.viewActivityModel.ActivityId" method="Post">
-                <input id="messageInput" asp-for="viewMessage.MessageBody">
-                <button id="sendButton">Send</button>
-            </form>
+        <div class="messageForm">
+            <div>
+                <input class="messageInput" id="messageInput" placeholder="Message here...">
+                <input type="hidden" id="hiddenUser" value="@Model.viewSessionUserName">
+                <button class="btn btn-primary btn-sm" id="sendButton">Send</button>
+            </div>
         </div>
     </div>
 </div>
