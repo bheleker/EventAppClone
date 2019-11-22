@@ -102,6 +102,7 @@ body {
   text-align: right;
   font-size: x-small;
   color: gray;
+  margin-right: 10px;
 }
 .messageInput{
   width: 85%;
@@ -197,6 +198,7 @@ body {
 
 .messageForm{
   vertical-align: bottom;
+  margin-top: 5px;
 }
 .GoogleButton{
   height: 65px;

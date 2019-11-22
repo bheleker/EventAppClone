@@ -10,13 +10,21 @@ connection.on("ReceiveMessage", function (user, message) {
     var encodedMsg = msg;
     var encodedUser = user+": ";
     var ms = document.createElement("span");
-    var us = document.createElement("p");
+    var us = document.createElement("span");
+    var time = document.createElement("span");//append this to flexcontainer
+    var flexContainer = document.createElement("div");
+    flexContainer.classList.add("flexContainer")
+    time.classList.add("messageDetail");
+    ms.setAttribute("class", "chatMessage");
     us.setAttribute("style", "font-weight:bold; font-style:oblique");
-    ms.setAttribute("style", "font-weight:unset; font-style:unset");
-    ms.textContent = encodedMsg;
+    time.innerText = "-Now";
+    var text = document.createTextNode(encodedMsg);
     us.textContent = encodedUser;
-    // document.getElementById("messagesList").appendChild(li).appendChild(ms);
-    document.getElementById("usersList").appendChild(us).appendChild(ms);
+    ms.appendChild(us);
+    ms.appendChild(text);
+    flexContainer.appendChild(ms);
+    flexContainer.appendChild(time);
+    document.getElementById("usersList").appendChild(flexContainer);
     var messageFlex = document.querySelector('.messageFlex');
     messageFlex.scrollTop = messageFlex.scrollHeight - messageFlex.clientHeight;
 });

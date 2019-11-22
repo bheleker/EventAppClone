@@ -12,7 +12,6 @@ using Newtonsoft.Json;
 using System.Net.Http; 
 
 
-
 namespace EventApp.Controllers
 {
     public class HomeController : Controller
