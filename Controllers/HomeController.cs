@@ -244,7 +244,7 @@ namespace EventApp.Controllers
             if(ThisActivity == null){
                 return RedirectToAction("Dashboard");
             }
-            return View(ThisActivity);
+            return View(viewModel);
             }
             return RedirectToAction("Index");
         }
