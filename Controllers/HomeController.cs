@@ -74,6 +74,8 @@ namespace EventApp.Controllers
         [HttpGet("GoogleSignIn")]
         public async Task<ActionResult> GoogleSignIn(string code, string state, string session_state)
         {
+            if(code != null){
+
                 var httpClient = new HttpClient  
             {  
                 BaseAddress = new Uri("https://www.googleapis.com")  
@@ -107,6 +109,10 @@ namespace EventApp.Controllers
                     HttpContext.Session.SetInt32("UserId", user.UserId);
                     return RedirectToAction("Dashboard");
                 }
+            }
+            else{
+                return RedirectToAction("Index");
+            }
             
         }
         [HttpPost]

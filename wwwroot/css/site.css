@@ -189,4 +189,13 @@ body {
 .messageForm{
   vertical-align: bottom;
 }
+.GoogleButton{
+  height: 65px;
+  width: 289px !important;
+  background-image: url("../images/btn_google_signin_dark_pressed_web@2x.png");
+  background-size: 301px 78px;
+  padding:0px;
+  background-position: center;
+  box-shadow: 2px 3px 5px black;
+}
 
