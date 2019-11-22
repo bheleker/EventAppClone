@@ -57,13 +57,22 @@ body {
 
 #map {
   height: 400px;
+  width: 71%;
+  text-align: center;
+  margin-left: 19%;
+  margin-top: 20px;
+  /* margin: auto; */
 }
 #mapDisplay{
   height: 400px;
   width: 100%;
   display: inline-block;
 }
-
+.createActivityButton{
+  text-align: center;
+  width: 30%;
+  margin: 20px 0px 0px 38%;
+}
 #activityChat{
   vertical-align: top;
   display: flex;

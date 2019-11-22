@@ -2,7 +2,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-4">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h1>Dojo Activity Center</h1></a>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h1>Event Planner</h1></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -21,7 +21,7 @@
     </nav>
 </header>
 <div class="text-left">
-    <h2 class="mb-5">Create an Activity</h2>
+    <h2 class="mb-5">Create an Event:</h2>
     <form asp-action="CreateActivity" method="post">
     <div class="ml-5 align-top">
         <div style="width:49.5%" class="d-inline-block">
@@ -54,7 +54,7 @@
     <div id="map"></div>
     
     
-    <button type="submit" class="btn btn-primary float-right mr-5 mt-4">Create Activity</button>
+    <button class="btn  btn-primary createActivityButton" type="submit">Create Activity</button>
 </form>
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEQidesVmbzzyHL2723Cb7tKKVhRha8cY&libraries=places&callback=initAutocomplete"
