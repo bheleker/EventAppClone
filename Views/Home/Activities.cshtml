@@ -105,25 +105,35 @@
     }
   </script>
 
-<div class="col-md-7 col-sm-12 nonBlock">
+<div class="col-md-5 col-sm-12 nonBlock">
     <h4>Join us at: @Model.viewActivityModel.Address</h4>
     <div id="mapDisplay"></div>
 </div>
-<div class="col-md-4 col-sm-12 rightSide">
+<div class="col-md-6 col-sm-12 rightSide">
     <h4>Group Chat:</h4>
     <div id="activityChat">
-        <div class="messageFlex">
-        @foreach (Message m in @Model.viewMessageList)
-        {
-            <span class="chatMessage">@m.MessageBody ---- @m.Creator.Name at @m.CreatedAt</span>
-        }
+        <div class="overflow-auto messageFlex">
+            @foreach (Message m in @Model.viewMessageList)
+            {
+                <div class="flexContainer">
+                    
+                    <span class="chatMessage"><span style="font-weight: bold; font-style: oblique; ">@m.Creator.Name:</span> @m.MessageBody</span>
+                    <span class="messageDetail">- @m.CreatedAt</span>
+                </div>
+            }
+            <div class="flexContainer">
+                <span id="messagesList" class="chatMessage"><span id="usersList" style="font-weight: bold; font-style: oblique; "></span></span>
+            </div>
         </div>
         <div class="messageForm">
-            <form asp-action="PostMessage" asp-route-id="@Model.viewActivityModel.ActivityId" method="Post">
-                <input asp-for="viewMessage.MessageBody">
-                <button>Send</button>
-            </form>
+            <div>
+                <input class="messageInput" id="messageInput" placeholder="Message here...">
+                <input type="hidden" id="hiddenUser" value="@Model.viewSessionUserName">
+                <button class="btn btn-primary btn-sm" id="sendButton">Send</button>
+            </div>
         </div>
     </div>
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEQidesVmbzzyHL2723Cb7tKKVhRha8cY&libraries=places&callback=initMap" async defer></script>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>

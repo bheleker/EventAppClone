@@ -167,6 +167,7 @@ namespace EventApp.Controllers
             .Include(m => m.Creator)
             .Where(m => m.ActivityId == id)
             .ToList();
+            User retUser = dbContext.Users.FirstOrDefault(u=>u.UserId == (int)HttpContext.Session.GetInt32("UserId"));
             
             ActivityViewModel viewModel = new ActivityViewModel()
             {
@@ -174,6 +175,7 @@ namespace EventApp.Controllers
                 viewActivityModel = retActivity,
                 viewSessionId = (int)HttpContext.Session.GetInt32("UserId"),
                 viewMessageList = retActivityList,
+                viewSessionUserName = retUser.Name,
 
             };
             foreach(ActivityModel a in ThisActivity){
@@ -187,15 +189,29 @@ namespace EventApp.Controllers
             }
             return RedirectToAction("Index");
         }
-        [HttpPost]
-        public IActionResult PostMessage(ActivityViewModel viewModel, int id)
+        // [HttpPost]
+        // public IActionResult PostMessage(ActivityViewModel viewModel, int id)
+        // {
+        //     System.Console.WriteLine("########################################################");
+        //     viewModel.viewMessage.UserId = (int)HttpContext.Session.GetInt32("UserId");
+        //     viewModel.viewMessage.ActivityId = id;
+        //     dbContext.Messages.Add(viewModel.viewMessage);
+        //     dbContext.SaveChanges();
+        //     return Redirect($"/Activity/{id}");
+        // }
+
+        [HttpPost("/postmessage")]
+        public IActionResult AjaxPostMessage(AjaxMessageViewModel viewModel)
         {
-            System.Console.WriteLine("########################################################");
-            viewModel.viewMessage.UserId = (int)HttpContext.Session.GetInt32("UserId");
-            viewModel.viewMessage.ActivityId = id;
-            dbContext.Messages.Add(viewModel.viewMessage);
+            Message postMessage = new Message()
+            {
+                MessageBody = viewModel.message,
+                UserId = (int)HttpContext.Session.GetInt32("UserId"),
+                ActivityId = viewModel.activityId,
+            };
+            dbContext.Messages.Add(postMessage);
             dbContext.SaveChanges();
-            return Redirect($"/Activity/{id}");
+            return new EmptyResult();
         }
         public IActionResult LogOut()
         {
