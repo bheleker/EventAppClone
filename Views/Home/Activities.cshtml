@@ -122,15 +122,16 @@
                 </div>
             }
             <div class="flexContainer">
-                <span id="messagesList" class="chatMessage"><span id="usersList" style="font-weight: bold; font-style: oblique; "></span></span>
+                <span id="messagesList" class="chatMessage"></span>
+                <span id="usersList"></span>
             </div>
         </div>
         <div class="messageForm">
-            <div>
-                <input class="messageInput" id="messageInput" placeholder="Message here...">
+            <form id="messageForm" autocomplete="off">
+                <input class="messageInput" id="messageInput" placeholder="Message here..." required>
                 <input type="hidden" id="hiddenUser" value="@Model.viewSessionUserName">
                 <button class="btn btn-primary btn-sm" id="sendButton">Send</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>

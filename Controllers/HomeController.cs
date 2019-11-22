@@ -221,10 +221,11 @@ namespace EventApp.Controllers
             IEnumerable<ActivityModel> ThisActivity = dbContext.Activities.Where(a => a.ActivityId == id)
             .Include(a => a.Joins).ThenInclude(j => j.User);
             ActivityModel retActivity = dbContext.Activities.FirstOrDefault(a => a.ActivityId == id);
-            IEnumerable<Message> retActivityList = dbContext.Messages
-            .Include(m => m.SpecificActivity)
+            IEnumerable<Message> retMessageList = dbContext.Messages
             .Include(m => m.Creator)
+            .Include(m => m.SpecificActivity)
             .Where(m => m.ActivityId == id)
+            .OrderBy(m => m.CreatedAt)
             .ToList();
             User retUser = dbContext.Users.FirstOrDefault(u=>u.UserId == (int)HttpContext.Session.GetInt32("UserId"));
             
@@ -233,7 +234,7 @@ namespace EventApp.Controllers
                 viewActivityList = ThisActivity,
                 viewActivityModel = retActivity,
                 viewSessionId = (int)HttpContext.Session.GetInt32("UserId"),
-                viewMessageList = retActivityList,
+                viewMessageList = retMessageList,
                 viewSessionUserName = retUser.Name,
 
             };

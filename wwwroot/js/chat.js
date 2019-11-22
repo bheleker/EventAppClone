@@ -9,12 +9,16 @@ connection.on("ReceiveMessage", function (user, message) {
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var encodedMsg = msg;
     var encodedUser = user+": ";
-    var li = document.createElement("span");
-    var lk = document.createElement("span");
-    li.textContent = encodedMsg;
-    lk.textContent = encodedUser;
-    document.getElementById("messagesList").appendChild(li);
-    document.getElementById("usersList").appendChild(lk);
+    var ms = document.createElement("span");
+    var us = document.createElement("p");
+    us.setAttribute("style", "font-weight:bold; font-style:oblique");
+    ms.setAttribute("style", "font-weight:unset; font-style:unset");
+    ms.textContent = encodedMsg;
+    us.textContent = encodedUser;
+    // document.getElementById("messagesList").appendChild(li).appendChild(ms);
+    document.getElementById("usersList").appendChild(us).appendChild(ms);
+    var messageFlex = document.querySelector('.messageFlex');
+    messageFlex.scrollTop = messageFlex.scrollHeight - messageFlex.clientHeight;
 });
 
 connection.start().then(function(){
@@ -26,10 +30,14 @@ connection.start().then(function(){
 function logMe(msg) {
     console.log(msg);
 }
+var messageFlex = document.querySelector('.messageFlex');
+messageFlex.scrollTop = messageFlex.scrollHeight - messageFlex.clientHeight;
 
-document.getElementById("sendButton").addEventListener("click", function (event) {
+document.getElementById("messageForm").addEventListener("submit", function (event) {
     var user = document.getElementById("hiddenUser").value;
-    var message = document.getElementById("messageInput").value;
+    var messageInput = document.getElementById("messageInput");
+    var message = messageInput.value;
+    messageInput.value = "";
     connection.invoke("SendMessage", user, message).catch(function (err) {
         return console.error(err.toString());
     });
