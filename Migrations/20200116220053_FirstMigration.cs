@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EventApp.Migrations
 {
-    public partial class MessagesMigration : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace EventApp.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 15, nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false)
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -84,31 +84,24 @@ namespace EventApp.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     MessageBody = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    CreatorUserId = table.Column<int>(nullable: true),
-                    SpecificActivityActivityId = table.Column<int>(nullable: true),
-                    MessageId1 = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false),
+                    ActivityId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.MessageId);
                     table.ForeignKey(
-                        name: "FK_Messages_Users_CreatorUserId",
-                        column: x => x.CreatorUserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Messages_Messages_MessageId1",
-                        column: x => x.MessageId1,
-                        principalTable: "Messages",
-                        principalColumn: "MessageId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Messages_Activities_SpecificActivityActivityId",
-                        column: x => x.SpecificActivityActivityId,
+                        name: "FK_Messages_Activities_ActivityId",
+                        column: x => x.ActivityId,
                         principalTable: "Activities",
                         principalColumn: "ActivityId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -127,19 +120,14 @@ namespace EventApp.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_CreatorUserId",
+                name: "IX_Messages_ActivityId",
                 table: "Messages",
-                column: "CreatorUserId");
+                column: "ActivityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_MessageId1",
+                name: "IX_Messages_UserId",
                 table: "Messages",
-                column: "MessageId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_SpecificActivityActivityId",
-                table: "Messages",
-                column: "SpecificActivityActivityId");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
