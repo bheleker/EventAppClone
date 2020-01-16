@@ -201,8 +201,8 @@ body {
   margin-top: 5px;
 }
 .GoogleButton{
-  height: 65px;
-  width: 289px !important;
+  height: 50px;
+  width: 288px !important;
   background-image: url("../images/btn_google_signin_dark_pressed_web@2x.png");
   background-size: 301px 78px;
   padding:0px;
