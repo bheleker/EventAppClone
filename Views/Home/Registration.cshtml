@@ -1,0 +1,26 @@
+@model EventApp.Models.LogUser
+<div class="registrationContainer">
+<h1 class="phoneWelcome">
+    Create An Account
+</h1>
+<form asp-action="Register" type="Post" class="ml-4 flexForms">
+    <div>
+        <span class="font-italic font-light d-block" asp-validation-for="Users.Name"></span>
+        <h3 class="d-inline-block mb-5 mt-4 w-25 phoneDescription">Name: </h3> <input class="d-inline-block phoneForm formWidth" asp-for="Users.Name">
+    </div>
+    <div>
+        <span class="font-italic font-light d-block" asp-validation-for="Users.Email"></span>
+        <h3 class="d-inline-block mb-5 w-25 phoneDescription">Email: </h3> <input class="d-inline-block phoneForm formWidth" asp-for="Users.Email">
+    </div>
+    <div>
+        <span class="font-italic font-light d-block" asp-validation-for="Users.Password"></span>
+        <h3 class="d-inline-block mb-5 w-25 phoneDescription">Password: </h3> <input class="d-inline-block phoneForm formWidth" asp-for="Users.Password">
+    </div>
+    <div>
+        <span class="font-italic font-light d-block" asp-validation-for="Users.MatchPassword"></span>
+        <h3 class="d-inline-block mb-5 w-25 phoneDescription">Confirm Password: </h3> <input class="d-inline-block phoneForm formWidth" asp-for="Users.MatchPassword">
+    </div>
+    <button class="btn btn-primary w-25 mr-4 mb-4 phoneButton"  style="box-shadow: 2px 2px 2px 2px black;"  type="submit">Register</button>
+</form>
+<a href="/">Already have an account? Log in here</a>
+</div>
