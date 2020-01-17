@@ -3,7 +3,7 @@ ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center loginPage phoneScreen">
-@{
+    @{
     ViewData["Title"] = "Home Page";
     }
     @model EventApp.Models.LogUser
@@ -12,24 +12,28 @@ ViewData["Title"] = "Home Page";
         content="868360967766-16m02f3h7j62d42jhbl3pkpmia124740.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<h1 class="text-left mb-4 phoneWelcome">Welcome to EventApp</h1>
-<div class="border border-dark text-left phoneLoginLogo" style="height:350px;">
-<div style="margin-top:-10px;" class="phoneLogin">
-<h3 style="margin-top:-20px; background-color:white;" class="d-inline-block ml-2">Login</h3>
-</div>    
-    <form class="ml-4 flexForms" asp-action="LogIn" type="post">
-            <span class="font-italic font-light d-inline-block" class="font-weight-light font-italic" asp-validation-for="Logs.Email"></span>
-        <div>
-            <h3 class="d-inline-block mb-5 formDescriptor w-25 mt-4 phoneDescription">Email: </h3> <input class="d-inline-block phoneForm formWidth" asp-for="Logs.Email">
+    <h1 class="text-left mb-4 phoneWelcome">Welcome to EventApp</h1>
+    <div class="border border-dark text-left phoneLoginLogo" style="height:350px;">
+        <div style="margin-top:-10px;" class="phoneLogin">
+            <h3 style="margin-top:-20px; background-color:white;" class="d-inline-block ml-2">Login</h3>
         </div>
-        <div>
-            <h3 class="d-inline-block mb-5 formDescriptor w-25 phoneDescription">Password: </h3> <input class="d-inline-block phoneForm formWidth" type="password" asp-for="Logs.Password">
-        </div>
-        <button class="btn btn-primary w-25 mr-4 mb-4 phoneButton" style="box-shadow: 2px 2px 2px 2px black;" type="submit">Log In</button>
-    </form>
-    <a href="Registration" class="ml-1">Don't have an account? Create one here</a>
-</div>
-    <div class="mb-3 mt-3 d-inline-block align-top" ><a href="/google/verify" class="GoogleButton btn"></a></div>
+        <form class="ml-4 flexForms" asp-action="LogIn" type="post">
+            <span class="d-block text-danger font-italic" asp-validation-for="Logs.Email"></span>
+            <div>
+                <h3 class="d-inline-block mb-5 formDescriptor w-25 mt-4 phoneDescription">Email: </h3> <input
+                    class="d-inline-block phoneForm formWidth" asp-for="Logs.Email">
+            </div>
+            <span class="d-block text-danger font-italic" asp-validation-for="Logs.Password"></span>
+            <div>
+                <h3 class="d-inline-block mb-5 formDescriptor w-25 phoneDescription">Password: </h3> <input
+                    class="d-inline-block phoneForm formWidth" type="password" asp-for="Logs.Password">
+            </div>
+            <button class="btn btn-primary w-25 mr-4 mb-4 phoneButton" style="box-shadow: 2px 2px 2px 2px black;"
+                type="submit">Log In</button>
+        </form>
+        <a href="Registration" class="ml-1">Don't have an account? Create one here</a>
+    </div>
+    <div class="mb-3 mt-3 d-inline-block align-top"><a href="/google/verify" class="GoogleButton btn"></a></div>
 </div>
 </div>
 

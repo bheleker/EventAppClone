@@ -60,12 +60,12 @@ namespace EventApp.Controllers
                     {
                         ModelState.AddModelError("Users.Email", "Email is already in use.");
                     }
-                    return View("Index");
+                    return View("Registration");
                 }
                 if (NewUser.Users.Password == null)
                 {
                     ModelState.AddModelError("Users.Password", "Password must not be empty.");
-                    return View("Index");
+                    return View("Registration");
                 }
                 PasswordHasher<User> PassHash = new PasswordHasher<User>();
                 NewUser.Users.Password = PassHash.HashPassword(NewUser.Users, NewUser.Users.Password);
@@ -77,7 +77,7 @@ namespace EventApp.Controllers
             }
             else
             {
-                return View("Index");
+                return View("Registration");
             }
         }
         [HttpGet("google/verify")]
