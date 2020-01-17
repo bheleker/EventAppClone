@@ -33,7 +33,19 @@ namespace EventApp.Controllers
                 return RedirectToAction("Dashboard");
             }
         }
-        [HttpPost]
+        [HttpGet("Registration")]
+        public IActionResult Registration()
+        {
+            if(HttpContext.Session.GetInt32("UserId") == null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Dashboard");
+            }
+        }
+                [HttpPost]
         public IActionResult Register(LogUser NewUser)
         {
             if (ModelState.IsValid)

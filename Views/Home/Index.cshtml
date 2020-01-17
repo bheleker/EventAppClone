@@ -2,8 +2,8 @@
 ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    @{
+<div class="text-center loginPage phoneScreen">
+@{
     ViewData["Title"] = "Home Page";
     }
     @model EventApp.Models.LogUser
@@ -12,57 +12,25 @@ ViewData["Title"] = "Home Page";
         content="868360967766-16m02f3h7j62d42jhbl3pkpmia124740.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <h1 class="text-left">Welcome to EventApp </h1>
-    <div style="width:45%" class="text-left d-inline-block align-top mt-5 border border-dark">
-        <div style="margin-top:-10px;">
-            <h3 style="margin-top:-20px; background-color:white;" class="ml-2 d-inline-block">Register</h3>
+<h1 class="text-left mb-4 phoneWelcome">Welcome to EventApp</h1>
+<div class="border border-dark text-left phoneLoginLogo" style="height:350px;">
+<div style="margin-top:-10px;" class="phoneLogin">
+<h3 style="margin-top:-20px; background-color:white;" class="d-inline-block ml-2">Login</h3>
+</div>    
+    <form class="ml-4 flexForms" asp-action="LogIn" type="post">
+            <span class="font-italic font-light d-inline-block" class="font-weight-light font-italic" asp-validation-for="Logs.Email"></span>
+        <div>
+            <h3 class="d-inline-block mb-5 formDescriptor w-25 mt-4 phoneDescription">Email: </h3> <input class="d-inline-block phoneForm formWidth" asp-for="Logs.Email">
         </div>
-        <form asp-action="Register" type="Post" class="ml-4">
-            <div>
-                <span class="font-italic text-danger d-block" asp-validation-for="Users.Name"></span>
-                <h3 class="d-inline-block mb-5 mt-4 w-50">Name: </h3> <input class="d-inline-block"
-                    asp-for="Users.Name">
-            </div>
-            <div>
-                <span class="font-italic text-danger d-block" asp-validation-for="Users.Email"></span>
-                <h3 class="d-inline-block mb-5 w-50">Email: </h3> <input class="d-inline-block" asp-for="Users.Email">
-            </div>
-            <div>
-                <span class="font-italic text-danger d-block" asp-validation-for="Users.Password"></span>
-                <h3 class="d-inline-block mb-5 w-50">Password: </h3> <input class="d-inline-block"
-                    asp-for="Users.Password">
-            </div>
-            <div>
-                <span class="font-italic text-danger d-block" asp-validation-for="Users.MatchPassword"></span>
-                <h3 class="d-inline-block mb-5 w-50">Confirm Password: </h3> <input class="d-inline-block"
-                    asp-for="Users.MatchPassword">
-            </div>
-            <button class="btn btn-primary w-25 mr-4 mb-4 float-right" style="box-shadow: 2px 2px 2px 2px black;"
-                type="submit">Register</button>
-        </form>
-    </div>
-    <div style="width:45%; padding-top:-10px;" class="ml-4 text-center d-inline-block align-top mt-5">
-        <div class="border border-dark text-left" style="height:350px;">
-            <div style="margin-top:-10px;">
-                <h3 style="margin-top:-20px; background-color:white;" class="d-inline-block ml-2">Login</h3>
-            </div>
-            <form class="ml-4" asp-action="LogIn" type="post">
-                <span class="font-italic text-danger" asp-validation-for="Logs.Email"></span>
-                <div>
-                    <h3 class="d-inline-block mb-5 w-50 mt-4">Email: </h3> <input class="d-inline-block"
-                        asp-for="Logs.Email">
-                </div>
-                <span class="font-italic text-danger" asp-validation-for="Logs.Password"></span>
-                <div>
-                    <h3 class="d-inline-block mb-5 w-50">Password: </h3> <input class="d-inline-block" type="password"
-                        asp-for="Logs.Password">
-                </div>
-                <button class="btn btn-primary w-25 mr-4 mb-4 float-right" style="box-shadow: 2px 2px 2px 2px black;"
-                    type="submit">Log In</button>
-            </form>
+        <div>
+            <h3 class="d-inline-block mb-5 formDescriptor w-25 phoneDescription">Password: </h3> <input class="d-inline-block phoneForm formWidth" type="password" asp-for="Logs.Password">
         </div>
-        <div class="mb-3 mt-3 d-inline-block align-top"><a href="/google/verify" class="GoogleButton btn"></a></div>
-    </div>
+        <button class="btn btn-primary w-25 mr-4 mb-4 phoneButton" style="box-shadow: 2px 2px 2px 2px black;" type="submit">Log In</button>
+    </form>
+    <a href="Registration" class="ml-1">Don't have an account? Create one here</a>
+</div>
+    <div class="mb-3 mt-3 d-inline-block align-top" ><a href="/google/verify" class="GoogleButton btn"></a></div>
+</div>
 </div>
 
 </html>
