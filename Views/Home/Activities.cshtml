@@ -42,7 +42,7 @@
     <a style="width:20%;box-shadow:2px 2px 2px 2px black;" class="float-right btn btn-primary"
         href="/Leave/@act.ActivityId">Leave</a>
     }
-    <h5>@Model.viewActivityModel.Date.ToString("MM/dd/yy") at @Model.viewActivityModel.Time @Model.viewActivityModel.AMPM</h5>
+    <h5>@Model.viewActivityModel.Date.ToString("MM/dd/yy") at @Model.viewActivityModel.TimeHour:@Model.viewActivityModel.TimeMin  @Model.viewActivityModel.AMPM</h5>
     <h5>@Model.viewActivityModel.Address</h5>
     <h3 class="mt-4 ml-5">Event Coordinator: @act.Creator.Name</h3>
     <h3 class="ml-5 mt-4">Description:</h3>

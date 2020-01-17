@@ -31,11 +31,15 @@ namespace EventApp.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("Duration");
+                    b.Property<string>("Duration")
+                        .IsRequired();
 
                     b.Property<string>("DurationFormat");
 
-                    b.Property<string>("Time")
+                    b.Property<string>("TimeHour")
+                        .IsRequired();
+
+                    b.Property<string>("TimeMin")
                         .IsRequired();
 
                     b.Property<string>("Title")

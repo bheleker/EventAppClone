@@ -11,15 +11,25 @@ namespace EventApp.Models
         [Required]
         [MaxLength(40)]
         public string Title {get;set;}
+
         [Required]
         public DateTime Date {get;set;}
+
         [Required]
-        [MinLength(10, ErrorMessage="Description must be at least ten characters long")]
+        [MinLength(3, ErrorMessage="Description must be at least three characters long")]
         public string Description {get; set;}
+
         [Required]
-        [RegularExpression("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$", ErrorMessage= "Please Submit a valid time in XX:XX format")]
+        [RegularExpression("^([0-12][0-9]|[0-9])$", ErrorMessage= "Please select hour")]
         
-        public string Time {get; set;}
+        public string TimeHour {get; set;}
+
+        [Required]
+        [RegularExpression("^([0-5][0-9])$", ErrorMessage= "Please select minutes")]
+        
+        public string TimeMin {get; set;}
+        
+        [Required]
         [RegularExpression("^[1-9]+[0-9]*$", ErrorMessage = "Duration must be a positive number greater than zero.")]
         public string Duration {get; set;}
         public string DurationFormat {get; set;}

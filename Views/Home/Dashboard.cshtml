@@ -36,7 +36,7 @@
             {
             <tr>
                 <td class="border-right border-dark"><a href="/Activity/@w.ActivityId">@w.Title</a></td>
-                <td class="border-right border-dark">@w.Date.ToString("MM/dd") at @w.Time @w.AMPM</td>
+                <td class="border-right border-dark">@w.Date.ToString("MM/dd") at @w.TimeHour:@w.TimeMin @w.AMPM</td>
                 <td class="border-right border-dark">@w.Duration @w.DurationFormat</td>
                 <td class="border-right border-dark">@w.Creator.Name</td>
                 <td class="border-right border-dark">@w.Joins.Count</td>

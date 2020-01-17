@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
-using System.Net.Http; 
+using System.Net.Http;
 
 
 namespace EventApp.Controllers
@@ -17,14 +17,14 @@ namespace EventApp.Controllers
     public class HomeController : Controller
     {
         private MyContext dbContext;
-     
+
         public HomeController(MyContext context)
         {
             dbContext = context;
         }
         public IActionResult Index()
         {
-            if(HttpContext.Session.GetInt32("UserId") == null)
+            if (HttpContext.Session.GetInt32("UserId") == null)
             {
                 return View();
             }
@@ -33,23 +33,25 @@ namespace EventApp.Controllers
                 return RedirectToAction("Dashboard");
             }
         }
-                [HttpPost]
+        [HttpPost]
         public IActionResult Register(LogUser NewUser)
-        {   
-            if(ModelState.IsValid)
+        {
+            if (ModelState.IsValid)
             {
-                if(dbContext.Users.Any(u => u.Email == NewUser.Users.Email))
+                if (dbContext.Users.Any(u => u.Email == NewUser.Users.Email))
                 {
-                if(dbContext.Users.Where(u => u.Email == NewUser.Users.Email).First().Password == null)
-                {
-                    ModelState.AddModelError("Users.Email", "Account already exists. Please sign in on Google.");
-                }
-                else{
-                    ModelState.AddModelError("Users.Email", "Email is already in use.");
-                }
+                    if (dbContext.Users.Where(u => u.Email == NewUser.Users.Email).First().Password == null)
+                    {
+                        ModelState.AddModelError("Users.Email", "Account already exists. Please sign in on Google.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Users.Email", "Email is already in use.");
+                    }
                     return View("Index");
                 }
-                if(NewUser.Users.Password == null){
+                if (NewUser.Users.Password == null)
+                {
                     ModelState.AddModelError("Users.Password", "Password must not be empty.");
                     return View("Index");
                 }
@@ -61,7 +63,8 @@ namespace EventApp.Controllers
                 HttpContext.Session.SetInt32("UserId", UserSave.UserId);
                 return RedirectToAction("Dashboard");
             }
-            else{
+            else
+            {
                 return View("Index");
             }
         }
@@ -73,72 +76,85 @@ namespace EventApp.Controllers
         [HttpGet("GoogleSignIn")]
         public async Task<ActionResult> GoogleSignIn(string code, string state, string session_state)
         {
-            if(code != null){
+            if (code != null)
+            {
 
-                var httpClient = new HttpClient  
-            {  
-                BaseAddress = new Uri("https://www.googleapis.com")  
-            };  
-            var requestUrl = $"oauth2/v4/token?code={code}&client_id=868360967766-e69abgd96akm5jjk2uuj46t1b641pcrk.apps.googleusercontent.com&client_secret=FHMvE9-Hc6ZOh9H0Af3oCiLQ&redirect_uri=https://ec2-3-136-161-174.us-east-2.compute.amazonaws.com/GoogleSignIn&grant_type=authorization_code";  
+                var httpClient = new HttpClient
+                {
+                    BaseAddress = new Uri("https://www.googleapis.com")
+                };
+                var requestUrl = $"oauth2/v4/token?code={code}&client_id=868360967766-e69abgd96akm5jjk2uuj46t1b641pcrk.apps.googleusercontent.com&client_secret=FHMvE9-Hc6ZOh9H0Af3oCiLQ&redirect_uri=https://ec2-3-136-161-174.us-east-2.compute.amazonaws.com/GoogleSignIn&grant_type=authorization_code";
 
-            var dict = new Dictionary<string, string>  
-            {  
-                { "Content-Type", "application/x-www-form-urlencoded" }  
-            };  
-            var req = new HttpRequestMessage(HttpMethod.Post, requestUrl) { Content = new FormUrlEncodedContent(dict) };  
-            var response = await httpClient.SendAsync(req);  
-            GmailToken token = JsonConvert.DeserializeObject<GmailToken>(await response.Content.ReadAsStringAsync());
-                var httpClientTwo = new HttpClient  
-            {  
-                BaseAddress = new Uri("https://www.googleapis.com")  
-            };  
-            string url = $"https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token={token.AccessToken}";  
-            var responseTwo = await httpClient.GetAsync(url);  
-            UserProfile GoogleUserInfo = JsonConvert.DeserializeObject<UserProfile>(await responseTwo.Content.ReadAsStringAsync()); 
-            if(dbContext.Users.Any(u => u.Email == GoogleUserInfo.Email))
+                var dict = new Dictionary<string, string>
+            {
+                { "Content-Type", "application/x-www-form-urlencoded" }
+            };
+                var req = new HttpRequestMessage(HttpMethod.Post, requestUrl) { Content = new FormUrlEncodedContent(dict) };
+                var response = await httpClient.SendAsync(req);
+                GmailToken token = JsonConvert.DeserializeObject<GmailToken>(await response.Content.ReadAsStringAsync());
+                var httpClientTwo = new HttpClient
+                {
+                    BaseAddress = new Uri("https://www.googleapis.com")
+                };
+                string url = $"https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token={token.AccessToken}";
+                var responseTwo = await httpClient.GetAsync(url);
+                UserProfile GoogleUserInfo = JsonConvert.DeserializeObject<UserProfile>(await responseTwo.Content.ReadAsStringAsync());
+                if (dbContext.Users.Any(u => u.Email == GoogleUserInfo.Email))
                 {
                     User GoogleUser = dbContext.Users.Where(u => u.Email == GoogleUserInfo.Email).First();
                     HttpContext.Session.SetInt32("UserId", GoogleUser.UserId);
                     return RedirectToAction("Dashboard");
                 }
-                else{
-                    User user = new User{Name=GoogleUserInfo.Name, Email = GoogleUserInfo.Email};
+                else
+                {
+                    User user = new User { Name = GoogleUserInfo.Name, Email = GoogleUserInfo.Email };
                     dbContext.Add(user);
                     dbContext.SaveChanges();
                     HttpContext.Session.SetInt32("UserId", user.UserId);
                     return RedirectToAction("Dashboard");
                 }
             }
-            else{
+            else
+            {
                 return RedirectToAction("Index");
             }
-            
+
         }
         [HttpPost]
         public IActionResult LogIn(LogUser LogUser)
         {
             var PassHash = new PasswordHasher<LogInUser>();
             User CurrentLog = dbContext.Users.Where(use => use.Email == LogUser.Logs.Email).FirstOrDefault();
-            if(CurrentLog == null)
+            if (CurrentLog == null)
             {
-                ModelState.AddModelError("Logs.Email", "*Invalid Email or Password");
+                ModelState.AddModelError("Logs.Email", "Invalid Email");
                 return View("Index");
             }
-            var result = PassHash.VerifyHashedPassword(LogUser.Logs, CurrentLog.Password, LogUser.Logs.Password);
-            if(result == 0)
+            if (LogUser.Logs.Password != null)
             {
-                ModelState.AddModelError("Logs.Email", "Invalid Email or Password");
-                return View("Index");
+
+                var result = PassHash.VerifyHashedPassword(LogUser.Logs, CurrentLog.Password, LogUser.Logs.Password);
+                if (result == 0)
+                {
+                    ModelState.AddModelError("Logs.Password", "Invalid password");
+                    return View("Index");
+                }
+                else
+                {
+                    HttpContext.Session.SetInt32("UserId", CurrentLog.UserId);
+                    return RedirectToAction("Dashboard");
+                }
             }
-            else{
-                HttpContext.Session.SetInt32("UserId", CurrentLog.UserId);
-                return RedirectToAction("Dashboard");
+            else
+            {
+                ModelState.AddModelError("Logs.Password", "Please enter a password");
+                return View("Index");
             }
 
         }
         public IActionResult Dashboard()
         {
-            if(HttpContext.Session.GetInt32("UserId") != null)
+            if (HttpContext.Session.GetInt32("UserId") != null)
             {
                 IEnumerable<ActivityModel> Activities = dbContext.Activities.Where(act => act.Date > DateTime.Now)
                 .OrderBy(act => act.Date)
@@ -147,47 +163,51 @@ namespace EventApp.Controllers
                 User theUser = dbContext.Users.Where(u => u.UserId == (int)HttpContext.Session.GetInt32("UserId"))
                 .FirstOrDefault();
                 ViewBag.Name = theUser.Name;
-                foreach(ActivityModel a in Activities)
+                foreach (ActivityModel a in Activities)
                 {
                     a.Creator = dbContext.Users.Where(u => u.UserId == a.UserId).First();
                 }
-            return View(Activities);
+                return View(Activities);
             }
-            else{
+            else
+            {
                 return RedirectToAction("Index");
             }
         }
         public IActionResult NewActivity()
         {
-            if(HttpContext.Session.GetInt32("UserId") != null)
+            if (HttpContext.Session.GetInt32("UserId") != null)
             {
-            return View();
+                return View();
             }
-            else{
+            else
+            {
                 return RedirectToAction("Index");
             }
         }
         [HttpPost]
         public IActionResult CreateActivity(ActivityModel NewActivity)
         {
-            if(NewActivity.Date < DateTime.Now)
-                {
-                    ModelState.AddModelError("Date", "Please select a valid date.");
-                }
-            if(ModelState.IsValid){
+            if (NewActivity.Date < DateTime.Now)
+            {
+                ModelState.AddModelError("Date", "Please select a future date.");
+            }
+            if (ModelState.IsValid)
+            {
                 NewActivity.UserId = (int)HttpContext.Session.GetInt32("UserId");
                 dbContext.Add(NewActivity);
                 dbContext.SaveChanges();
                 return RedirectToAction("Dashboard");
             }
-            else{
+            else
+            {
                 return View("NewActivity");
             }
         }
         [HttpGet("Join/{id:int}")]
         public IActionResult Join(int id)
         {
-            Join ThisJoin = new Join{ActivityId = id, UserId = (int)HttpContext.Session.GetInt32("UserId")};
+            Join ThisJoin = new Join { ActivityId = id, UserId = (int)HttpContext.Session.GetInt32("UserId") };
             dbContext.Add(ThisJoin);
             dbContext.SaveChanges();
             return RedirectToAction("Dashboard");
@@ -203,54 +223,60 @@ namespace EventApp.Controllers
         [HttpGet("ActivityDelete/{id:int}")]
         public IActionResult ActivityDelete(int id)
         {
-            if(HttpContext.Session.GetInt32("UserId") != null){
-            ActivityModel Activity = dbContext.Activities.Where(a => a.ActivityId == id).First();
-            if((int)HttpContext.Session.GetInt32("UserId") == Activity.UserId)
+            if (HttpContext.Session.GetInt32("UserId") != null)
             {
-                dbContext.Remove(Activity);
-                dbContext.SaveChanges();
-                return RedirectToAction("Dashboard");
+                ActivityModel Activity = dbContext.Activities.Where(a => a.ActivityId == id).First();
+                if ((int)HttpContext.Session.GetInt32("UserId") == Activity.UserId)
+                {
+                    dbContext.Remove(Activity);
+                    dbContext.SaveChanges();
+                    return RedirectToAction("Dashboard");
+                }
+                else
+                {
+                    return RedirectToAction("Dashboard");
+                }
             }
-            else{
-                return RedirectToAction("Dashboard");
-            }
-            }
-            else{
+            else
+            {
                 return RedirectToAction("Index");
             }
         }
         [HttpGet("Activity/{id:int}")]
         public IActionResult Activities(int id)
         {
-            if(HttpContext.Session.GetInt32("UserId") != null){
-            IEnumerable<ActivityModel> ThisActivity = dbContext.Activities.Where(a => a.ActivityId == id)
-            .Include(a => a.Joins).ThenInclude(j => j.User);
-            ActivityModel retActivity = dbContext.Activities.FirstOrDefault(a => a.ActivityId == id);
-            IEnumerable<Message> retMessageList = dbContext.Messages
-            .Include(m => m.Creator)
-            .Include(m => m.SpecificActivity)
-            .Where(m => m.ActivityId == id)
-            .OrderBy(m => m.CreatedAt)
-            .ToList();
-            User retUser = dbContext.Users.FirstOrDefault(u=>u.UserId == (int)HttpContext.Session.GetInt32("UserId"));
-            
-            ActivityViewModel viewModel = new ActivityViewModel()
+            if (HttpContext.Session.GetInt32("UserId") != null)
             {
-                viewActivityList = ThisActivity,
-                viewActivityModel = retActivity,
-                viewSessionId = (int)HttpContext.Session.GetInt32("UserId"),
-                viewMessageList = retMessageList,
-                viewSessionUserName = retUser.Name,
+                IEnumerable<ActivityModel> ThisActivity = dbContext.Activities.Where(a => a.ActivityId == id)
+                .Include(a => a.Joins).ThenInclude(j => j.User);
+                ActivityModel retActivity = dbContext.Activities.FirstOrDefault(a => a.ActivityId == id);
+                IEnumerable<Message> retMessageList = dbContext.Messages
+                .Include(m => m.Creator)
+                .Include(m => m.SpecificActivity)
+                .Where(m => m.ActivityId == id)
+                .OrderBy(m => m.CreatedAt)
+                .ToList();
+                User retUser = dbContext.Users.FirstOrDefault(u => u.UserId == (int)HttpContext.Session.GetInt32("UserId"));
 
-            };
-            foreach(ActivityModel a in ThisActivity){
+                ActivityViewModel viewModel = new ActivityViewModel()
+                {
+                    viewActivityList = ThisActivity,
+                    viewActivityModel = retActivity,
+                    viewSessionId = (int)HttpContext.Session.GetInt32("UserId"),
+                    viewMessageList = retMessageList,
+                    viewSessionUserName = retUser.Name,
 
-            a.Creator = dbContext.Users.Where(u => u.UserId == a.UserId).First();
-            }
-            if(ThisActivity == null){
-                return RedirectToAction("Dashboard");
-            }
-            return View(viewModel);
+                };
+                foreach (ActivityModel a in ThisActivity)
+                {
+
+                    a.Creator = dbContext.Users.Where(u => u.UserId == a.UserId).First();
+                }
+                if (ThisActivity == null)
+                {
+                    return RedirectToAction("Dashboard");
+                }
+                return View(viewModel);
             }
             return RedirectToAction("Index");
         }

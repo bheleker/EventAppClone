@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EventApp.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class ChangedTimeFormat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,8 +32,9 @@ namespace EventApp.Migrations
                     Title = table.Column<string>(maxLength: 40, nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    Time = table.Column<string>(nullable: false),
-                    Duration = table.Column<string>(nullable: true),
+                    TimeHour = table.Column<string>(nullable: false),
+                    TimeMin = table.Column<string>(nullable: false),
+                    Duration = table.Column<string>(nullable: false),
                     DurationFormat = table.Column<string>(nullable: true),
                     AMPM = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),

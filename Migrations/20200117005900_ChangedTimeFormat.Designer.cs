@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventApp.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20200116220053_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20200117005900_ChangedTimeFormat")]
+    partial class ChangedTimeFormat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,11 +33,15 @@ namespace EventApp.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("Duration");
+                    b.Property<string>("Duration")
+                        .IsRequired();
 
                     b.Property<string>("DurationFormat");
 
-                    b.Property<string>("Time")
+                    b.Property<string>("TimeHour")
+                        .IsRequired();
+
+                    b.Property<string>("TimeMin")
                         .IsRequired();
 
                     b.Property<string>("Title")
