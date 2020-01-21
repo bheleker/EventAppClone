@@ -212,13 +212,55 @@ body {
   background-position: center;
   box-shadow: 2px 3px 5px black;
 }
+.welcome{
+  margin: 10px 0px 50px;
+}
+.loginContainer{
+  width: 50% !important;
+  display: flex;
+  flex-direction: column;
+  padding: 0% 5% 5%;
+}
+
+.registrationContainer{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  padding: 0% 5% 5%;
+
+}
+.container{
+  text-align: -webkit-center;
+}
+.loginPage{
+  display: flex;
+  flex-direction: column;
+}
+.formWidth{
+  width: 55% !important;
+  margin-left:5%;
+  max-width:250px;
+}
+
+#needAcct{
+  text-align: center !important;
+}
+
+
+/* Phone view */
+/*  */
 @media (max-width:450px){
+  .loginContainer, .registrationContainer{
+    width: 100% !important;
+  }
   .phoneScreen{
     width: 100%;
     display: flex;
     flex-direction: column;
   }
-  .phoneLoginLogo{
+  .phoneLoginLogo, .phoneRegLogo{
     border: none !important;
   }
   .phoneLogin{
@@ -251,24 +293,4 @@ body {
     text-align: center !important;
     margin-top: 10px;
   }
-  }
-  .registrationContainer{
-    width:70%;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: space-around;
-    text-align: center;
-
-  }
-  .container{
-    text-align: center;
-  }
-  .loginPage{
-    display: inline-block;
-  }
-  .formWidth{
-    width: 33% !important;
-    margin-left:5%;
-    max-width:250px;
-  }
-
+}
