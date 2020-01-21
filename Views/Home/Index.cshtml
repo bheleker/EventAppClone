@@ -12,21 +12,39 @@ ViewData["Title"] = "Home Page";
         content="868360967766-16m02f3h7j62d42jhbl3pkpmia124740.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <h1 class="phoneWelcome welcome">Welcome to EventApp</h1>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <h1>EventApp</h1>
+            </a>
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <!-- <div class="navbar-collapse collapse">
+                <ul class="navbar-nav flex-grow-1 justify-right flex-row-reverse">
+                    <li class="nav-item mr-2 ml-5">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut"><u
+                                class="text-primary">About</u></a>
+                    </li>
+                </ul>
+            </div> -->
+        </div>
+    </nav>
     <div class="loginContainer border border-dark text-left phoneLoginLogo">
         <div style="margin-top:-10px;" class="phoneLogin">
-            <h3 style="margin-top:-20px; background-color:white;" class="d-inline-block ml-2">Login</h3>
+            <h3 style="margin-top:-20px; background-color:#FAFAFA;" class="d-inline-block ml-2">Login</h3>
         </div>
-        <form class="ml-4 flexForms" asp-action="LogIn" type="post">
+        <form asp-action="LogIn" type="post" class="ml-4 flexForms">
             <span class="d-block text-danger font-italic" asp-validation-for="Logs.Email"></span>
             <div>
-                <h3 class="d-inline-block mb-5 formDescriptor w-25 mt-4 phoneDescription">Email: </h3> <input
-                    class="d-inline-block phoneForm formWidth" asp-for="Logs.Email">
+                <h3 class="d-inline-block mb-5 formDescriptor w-25 mt-4 phoneDescription">Email: </h3> 
+                <input class="d-inline-block phoneForm formWidth" asp-for="Logs.Email">
             </div>
             <span class="d-block text-danger font-italic" asp-validation-for="Logs.Password"></span>
             <div>
-                <h3 class="d-inline-block mb-5 formDescriptor w-25 phoneDescription">Password: </h3> <input
-                    class="d-inline-block phoneForm formWidth" type="password" asp-for="Logs.Password">
+                <h3 class="d-inline-block mb-5 formDescriptor w-25 phoneDescription">Password: </h3> 
+                <input class="d-inline-block phoneForm formWidth" type="password" asp-for="Logs.Password">
             </div>
             <button class="btn btn-primary w-25 mr-4 mb-4 phoneButton" style="box-shadow: 2px 2px 2px 2px black;"
                 type="submit">Log In</button>

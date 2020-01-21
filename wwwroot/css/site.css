@@ -17,7 +17,9 @@ html {
     font-size: 16px;
   }
 }
-
+body{
+  background-color: #FAFAFA;
+}
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
@@ -44,6 +46,10 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+}
+nav{
+  background: rgba(72, 58, 58, 0.1);
+  margin: 0px !important;
 }
 .footer {
   position: absolute;
@@ -219,17 +225,18 @@ body {
   width: 50% !important;
   display: flex;
   flex-direction: column;
-  padding: 0% 5% 5%;
+  padding: 0% 2.5% 2%;
+  margin: 40px 0px 0px;
 }
 
 .registrationContainer{
-  width: 50%;
+  width: 50% !important;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   text-align: center;
-  padding: 0% 5% 5%;
-
+  padding: 0% 2.5% 2%;
+  margin: 40px 0px 0px;
 }
 .container{
   text-align: -webkit-center;
@@ -240,18 +247,26 @@ body {
 }
 .formWidth{
   width: 55% !important;
-  margin-left:5%;
-  max-width:250px;
+  margin-left: 5%;
+  max-width: 250px;
 }
 
 #needAcct{
   text-align: center !important;
 }
 
+/* Mixed view */
+/*  */
+
+@media(max-width: 999px){
+  .loginContainer, .registrationContainer{
+    width: 71% !important;
+  }
+}
 
 /* Phone view */
 /*  */
-@media (max-width:450px){
+@media (max-width: 767px){
   .loginContainer, .registrationContainer{
     width: 100% !important;
   }
@@ -262,6 +277,9 @@ body {
   }
   .phoneLoginLogo, .phoneRegLogo{
     border: none !important;
+  }
+  .phoneLogin > h3{
+    margin-top: 10px !important;
   }
   .phoneLogin{
     width: 100% !important;
@@ -278,7 +296,7 @@ body {
     display: block !important;
     margin-bottom: 20px !important;
     width: 95% !important;
-    justify-self: left;
+    justify-self: center !important;
   }
   .phoneDescription{
     margin-bottom: 20px !important;
@@ -286,11 +304,15 @@ body {
     width: fit-content !important;
   }
   .phoneButton{
-    width: 75% !important;
+    width: 55% !important;
     margin-left: 9% !important;
   }
   .phoneWelcome{
     text-align: center !important;
     margin-top: 10px;
+  }
+  #needAcct{
+    margin: 10px 10px 10px 55px !important;
+    text-align: left !important;
   }
 }

@@ -1,13 +1,13 @@
 @model EventApp.Models.ActivityModel
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-4">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-4">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                <h1>Event Planner</h1>
+                <h1>EventApp</h1>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar- text-danger font-italictoggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav flex-grow-1 justify-right flex-row-reverse">
@@ -58,7 +58,8 @@
             <div style="width:49.5%" class="d-inline-block">
                 <span class="d-block text-danger font-italic" asp-validation-for="Date"></span>
                 <h3 class="d-inline-block mb-4 w-25">Date:</h3>
-                <input class="d-inline-block ml-3" style="width:60%;" asp-for="Date" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")">
+                <input class="d-inline-block ml-3" style="width:60%;" asp-for="Date" type="date"
+                    value="@DateTime.Today.ToString(" yyyy-MM-dd")">
             </div>
             <div style="width:49.5%" class="d-inline-block">
                 <span class="d-block text-danger font-italic" asp-validation-for="Duration"></span>
