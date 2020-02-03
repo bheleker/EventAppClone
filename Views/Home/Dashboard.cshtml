@@ -26,9 +26,9 @@
     <tr class="border-right border-dark">
         <th class="border-top border-right border-dark">Activity</th>
         <th class="border-top border-right border-dark">Date and Time</th>
-        <th class="border-top border-right border-dark">Duration</th>
-        <th class="border-top border-right border-dark">Event Coordinator</th>
-        <th class="border-top border-right border-dark">No. of Participants</th>
+        <th class="border-top border-right border-dark disappear">Duration</th>
+        <th class="border-top border-right border-dark">Creator</th>
+        <th class="border-top border-right border-dark disappear">No. of Participants</th>
         <th class="border-top border-right border-dark">Actions</th>
     </tr>
     </thead>
@@ -37,10 +37,10 @@
             {
             <tr>
                 <td class="border-right border-dark"><a href="/Activity/@w.ActivityId">@w.Title</a></td>
-                <td class="border-right border-dark">@w.Date.ToString("MM/dd") at @w.TimeHour:@w.TimeMin @w.AMPM</td>
-                <td class="border-right border-dark">@w.Duration @w.DurationFormat</td>
+                <td class="border-right border-dark">@w.Date.ToString("MM/dd")</td>
+                <td class="border-right border-dark disappear">@w.Duration @w.DurationFormat</td>
                 <td class="border-right border-dark">@w.Creator.Name</td>
-                <td class="border-right border-dark">@w.Joins.Count</td>
+                <td class="border-right border-dark disappear">@w.Joins.Count</td>
                  @if(ViewBag.CurrentUser == @w.UserId)
                  {
                      <td class="border-right border-dark"><a href="/ActivityDelete/@w.ActivityId">Delete</a></td>

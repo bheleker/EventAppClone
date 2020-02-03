@@ -270,6 +270,9 @@ nav{
   .loginContainer, .registrationContainer{
     width: 100% !important;
   }
+  .disappear{
+    display: none;
+  }
   .phoneScreen{
     width: 100%;
     display: flex;
