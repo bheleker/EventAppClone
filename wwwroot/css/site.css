@@ -255,6 +255,22 @@ nav{
   text-align: center !important;
 }
 
+.newEvTimeSelect{
+  margin-left: 2.5%;
+}
+.vertAlignTop{
+  display: flex;
+  flex-flow: row;
+  justify-content: start;
+}
+.specEvH3{
+  margin: 30px 0px 20px 0px;
+  display: inline-block;
+}
+.vertAlignTop > h3{
+  margin-right: 30%;
+}
+
 /* Mixed view */
 /*  */
 
@@ -272,6 +288,9 @@ nav{
   }
   .disappear{
     display: none;
+  }
+  .topAlign{
+    vertical-align: top !important;
   }
   .phoneScreen{
     width: 100%;
@@ -295,11 +314,46 @@ nav{
     flex-direction: column;
     justify-content: center;
   }
+  .vertAlignTop{
+    display: flex;
+    flex-flow: column;
+    /* justify-content: space-around; */
+  }
   .phoneForm{
     display: block !important;
     margin-bottom: 20px !important;
     width: 95% !important;
     justify-self: center !important;
+  }
+  .newEvH3{
+    display: block !important;
+  }
+  .newEvTimeSelect{
+    margin-left: 14px !important;
+    margin-bottom: 20px !important;
+  }
+  select{
+    width: 28% !important;
+  }
+  .durWidth{
+    width: 50% !important;
+  }
+  #map{
+    max-height: 30% !important;
+    width: 100% !important;
+    margin: unset !important;
+  }
+  #pac-input{
+    width: 90% !important;
+    position: absolute !important;
+    left: 6px !important;
+    top: 57px !important;
+  }
+  .createActivityButton{
+    width: 40%;
+    height: 20% !important;
+    margin-top: 20px;
+    margin-left: 29%;
   }
   .phoneDescription{
     margin-bottom: 20px !important;

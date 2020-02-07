@@ -24,7 +24,7 @@
         </div>
     </nav>
 </header>
-<div class="ml-5 text-left">
+<div class=" text-left">
     <h1 class="d-inline-block">@Model.viewActivityModel.Title</h1>
     @foreach(ActivityModel act in Model.viewActivityList)
     {
@@ -42,13 +42,17 @@
     <a style="width:20%;box-shadow:2px 2px 2px 2px black;" class="float-right btn btn-primary"
         href="/Leave/@act.ActivityId">Leave</a>
     }
-    <h5>@Model.viewActivityModel.Date.ToString("MM/dd/yy") at @Model.viewActivityModel.TimeHour:@Model.viewActivityModel.TimeMin  @Model.viewActivityModel.AMPM</h5>
+    <h5>Join us on @Model.viewActivityModel.Date.ToString("MM/dd/yy") at
+        @Model.viewActivityModel.TimeHour:@Model.viewActivityModel.TimeMin @Model.viewActivityModel.AMPM!</h5>
     <h5>@Model.viewActivityModel.Address</h5>
-    <h3 class="mt-4 ml-5">Event Coordinator: @act.Creator.Name</h3>
-    <h3 class="ml-5 mt-4">Description:</h3>
-    <div class="pl-4 mt-3 mb-5">
-        <p class="ml-5">@act.Description</p>
+    <div class="vertAlignTop">
+        <h3 class="specEvH3">Event Coordinator: @act.Creator.Name</h3>
+        <div class="specEvH3">
+            <h3 class="">Description:</h3>
+            <p class="ml-5">@act.Description</p>
+        </div>
     </div>
+
     <h3>Participants:</h3>
     <div class="pl-4 mt-3 mb-5">
         <ul class="ml-5">
@@ -69,43 +73,43 @@
     var infowindow;
 
     function initMap() {
-      var sydney = new google.maps.LatLng(40, -95.7);
+        var sydney = new google.maps.LatLng(40, -95.7);
 
-      infowindow = new google.maps.InfoWindow();
+        infowindow = new google.maps.InfoWindow();
 
-      map = new google.maps.Map(
-          document.getElementById('mapDisplay'), {center: sydney, zoom: 17});
+        map = new google.maps.Map(
+            document.getElementById('mapDisplay'), { center: sydney, zoom: 17 });
 
-      var request = {
-        query: '@Model.viewActivityModel.Address',
-        fields: ['name', 'geometry'],
-      };
+        var request = {
+            query: '@Model.viewActivityModel.Address',
+            fields: ['name', 'geometry'],
+        };
 
-      service = new google.maps.places.PlacesService(map);
+        service = new google.maps.places.PlacesService(map);
 
-      service.findPlaceFromQuery(request, function(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
-          }
+        service.findPlaceFromQuery(request, function (results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                }
 
-          map.setCenter(results[0].geometry.location);
-        }
-      });
+                map.setCenter(results[0].geometry.location);
+            }
+        });
     }
 
     function createMarker(place) {
-      var marker = new google.maps.Marker({
-        map: map,
-        position: place.geometry.location
-      });
+        var marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location
+        });
 
-      google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-      });
+        google.maps.event.addListener(marker, 'click', function () {
+            infowindow.setContent(place.name);
+            infowindow.open(map, this);
+        });
     }
-  </script>
+</script>
 
 <div class="col-md-5 col-sm-12 nonBlock">
     <h4>Directions:</h4>
@@ -117,11 +121,12 @@
         <div id="usersList" class="overflow-auto messageFlex">
             @foreach (Message m in @Model.viewMessageList)
             {
-                <div class="flexContainer">
-                    
-                    <span class="chatMessage"><span style="font-weight: bold; font-style: oblique; ">@m.Creator.Name:</span> @m.MessageBody</span>
-                    <span class="messageDetail">- @m.CreatedAt</span>
-                </div>
+            <div class="flexContainer">
+
+                <span class="chatMessage"><span style="font-weight: bold; font-style: oblique; ">@m.Creator.Name:</span>
+                    @m.MessageBody</span>
+                <span class="messageDetail">- @m.CreatedAt</span>
+            </div>
             }
         </div>
         <div class="messageForm">
@@ -133,7 +138,9 @@
         </div>
     </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEQidesVmbzzyHL2723Cb7tKKVhRha8cY&libraries=places&callback=initMap" async defer></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEQidesVmbzzyHL2723Cb7tKKVhRha8cY&libraries=places&callback=initMap"
+    async defer></script>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="~/js/chat.js"></script>

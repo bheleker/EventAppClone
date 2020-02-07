@@ -27,16 +27,16 @@
 <div class="text-left">
     <h2 class="mb-5">Create an Event:</h2>
     <form asp-action="CreateActivity" method="post">
-        <div class="ml-5 align-top">
+        <div class="ml-3 align-top">
             <div style="width:49.5%" class="d-inline-block">
                 <span class="d-block text-danger font-italic" asp-validation-for="Title"></span>
-                <h3 class="d-inline-block mb-4 w-25">Title:</h3>
-                <input class="d-inline-block ml-3" style="width:60%;" asp-for="Title">
+                <h3 class="newEvH3 d-inline-block mb-4 w-25">Title:</h3>
+                <input class="d-inline-block ml-3 phoneForm" style="width:60%;" asp-for="Title">
             </div>
             <div style="width:49.5%" class="d-inline-block">
                 <span class="d-block text-danger font-italic" asp-validation-for="TimeHour"></span>
-                <h3 class="d-inline-block mb-4 w-25">Time:</h3>
-                <select style="width:10%;" asp-for="TimeHour">
+                <h3 class="newEvH3 d-inline-block mb-4 w-25">Time:</h3>
+                <select class="newEvTimeSelect" style="width:10%;" asp-for="TimeHour">
                     @{ for (int i = 1; i < 13; i++){ <option>@i</option>
                         }
                         }
@@ -57,24 +57,25 @@
             </div>
             <div style="width:49.5%" class="d-inline-block">
                 <span class="d-block text-danger font-italic" asp-validation-for="Date"></span>
-                <h3 class="d-inline-block mb-4 w-25">Date:</h3>
-                <input class="d-inline-block ml-3" style="width:60%;" asp-for="Date" type="date"
+                <h3 class="newEvH3 d-inline-block mb-4 w-25">Date:</h3>
+                <input class="d-inline-block ml-3 phoneForm" style="width:60%;" asp-for="Date" type="date"
                     value="@DateTime.Today.ToString(" yyyy-MM-dd")">
             </div>
             <div style="width:49.5%" class="d-inline-block">
                 <span class="d-block text-danger font-italic" asp-validation-for="Duration"></span>
-                <h3 class="d-inline-block mb-4 w-25">Duration:</h3><input class="d-inline-block ml-3" style="width:35%;"
+                <h3 class="newEvH3 d-inline-block mb-4 w-25">Duration:</h3><input class="d-inline-block ml-3" style="width:35%;"
                     asp-for="Duration">
-                <select style="width:25%;" asp-for="DurationFormat">
+                <select class="durWidth" asp-for="DurationFormat">
                     <option value="Hours">Hours</option>
                     <option value="Minutes">Minutes</option>
                     <option value="Days">Days</option>
                 </select>
             </div>
         </div>
-        <div class="ml-5 align-top mt-4">
+        <div class="ml-3 align-top mt-4">
             <span class="d-block text-danger font-italic" asp-validation-for="Description"></span>
-            <h3 class="d-inline-block align-top mr-2">Description:</h3><textarea asp-for="Description" class="w-75"
+            <h3 class="newEvH3 d-inline-block align-top mr-2">Description:</h3>
+            <textarea asp-for="Description" class="textDescHeight newEvTimeSelect w-75"
                 style="height:200px;"></textarea>
         </div>
         <input asp-for="Address" id="pac-input" class="controls" type="text" placeholder="Search Box">
