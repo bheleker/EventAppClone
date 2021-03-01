@@ -80,10 +80,12 @@ namespace EventApp.Controllers
                 return View("Registration");
             }
         }
+        /*
+        Removed due to token necessity
         [HttpGet("google/verify")]
         public void GoogleVerify()
         {
-            Response.Redirect("https://accounts.google.com/o/oauth2/v2/auth?client_id=868360967766-e69abgd96akm5jjk2uuj46t1b641pcrk.apps.googleusercontent.com&response_type=code&scope=openid%20email%20profile&redirect_uri=https://ec2-3-136-161-174.us-east-2.compute.amazonaws.com/GoogleSignIn&state=abcdef");
+            Response.Redirect("https://accounts.google.com/o/oauth2/v2/auth?client_id=");
         }
         [HttpGet("GoogleSignIn")]
         public async Task<ActionResult> GoogleSignIn(string code, string state, string session_state)
@@ -95,7 +97,7 @@ namespace EventApp.Controllers
                 {
                     BaseAddress = new Uri("https://www.googleapis.com")
                 };
-                var requestUrl = $"oauth2/v4/token?code={code}&client_id=868360967766-e69abgd96akm5jjk2uuj46t1b641pcrk.apps.googleusercontent.com&client_secret=FHMvE9-Hc6ZOh9H0Af3oCiLQ&redirect_uri=https://ec2-3-136-161-174.us-east-2.compute.amazonaws.com/GoogleSignIn&grant_type=authorization_code";
+                var requestUrl = $"oauth2/v4/token?code={code}&client_id=";
 
                 var dict = new Dictionary<string, string>
             {
@@ -130,8 +132,8 @@ namespace EventApp.Controllers
             {
                 return RedirectToAction("Index");
             }
-
         }
+        */
         [HttpPost]
         public IActionResult LogIn(LogUser LogUser)
         {

@@ -78,13 +78,17 @@
             <textarea asp-for="Description" class="textDescHeight newEvTimeSelect w-75"
                 style="height:200px;"></textarea>
         </div>
+        <h3>Location:</h3>
         <input asp-for="Address" id="pac-input" class="controls" type="text" placeholder="Search Box">
-        <div id="map"></div>
+        <div id="map" style="color: red;">This is a map if a key is provided</div>
 
 
         <button class="btn  btn-primary createActivityButton" type="submit">Create Activity</button>
     </form>
 </div>
+<!--
+    !!Commented out due to key necessity!!
 <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEQidesVmbzzyHL2723Cb7tKKVhRha8cY&libraries=places&callback=initAutocomplete"
+    src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initAutocomplete"
     async defer></script>
+    -->
